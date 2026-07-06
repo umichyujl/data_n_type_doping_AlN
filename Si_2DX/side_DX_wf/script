@@ -1,0 +1,21 @@
+#!/bin/bash
+#SBATCH -N 8
+#SBATCH -C cpu
+#SBATCH -q regular
+#SBATCH -J Sisideq0HSE
+#SBATCH -o 1-q_0-HSE.%j
+#SBATCH -A m3682
+#SBATCH --mail-user=yujl@umich.edu
+#SBATCH --mail-type=BEGIN,END,FAIL
+#SBATCH -t 04:00:00
+
+module load vasp/5.4.1-cpu
+
+#OpenMP settings:
+export OMP_NUM_THREADS=2
+export OMP_PLACES=threads
+export OMP_PROC_BIND=spread
+
+#run the application:
+srun -n 1024 -c 2 --cpu_bind=cores vasp_std
+
