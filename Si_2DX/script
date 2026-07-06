@@ -1,0 +1,21 @@
+#!/bin/bash
+#SBATCH -N 10
+#SBATCH -C cpu
+#SBATCH -q regular
+#SBATCH -J alpha_Sirough
+#SBATCH -o neb.%j
+#SBATCH -A m3682
+#SBATCH --mail-user=yujl@umich.edu
+#SBATCH --mail-type=BEGIN,END,FAIL
+#SBATCH -t 24:00:00
+
+module load vasp-tpc/5.4.4-cpu
+
+#OpenMP settings:
+export OMP_NUM_THREADS=2
+export OMP_PLACES=threads
+export OMP_PROC_BIND=spread
+
+#run the application:
+srun -n 160 -c 16 --cpu_bind=cores vasp_std
+

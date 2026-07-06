@@ -1,0 +1,45 @@
+##General
+SYSTEM = Si-doped AlN 2x2x3 supercell
+
+## Output writing ##
+#ISTART = 0
+#LWAVE = .T.    
+#LCHARG = .T.   
+#LVTOT = .T.
+#LVHAR = .T.
+
+## electronic settings ##
+ISMEAR = 0     # 
+SIGMA = 0.02   # 
+ENCUT = 400    #
+EDIFF = 1E-6   
+#NELM = 300    # 
+#NELMIN = 8    # 
+NELECT = 290   # for q = -1
+#ISPIN = 2
+#LREAL = Auto
+
+## Ionic / structure settings ##
+ISIF = 2       
+IBRION = 3     # 1? 2?
+NSW = 500       
+POTIM = 0      # ?? This scales the ionic steps to be bigger or smaller, sometimes needs used to help convergence
+EDIFFG = -0.08
+
+## NEB ##
+IMAGES = 5
+ICHAIN = 0 
+IOPT = 7       # ? test this, 1/2 --> fine; 7 --> rough
+LCLIMB = .TRUE. 
+
+## HSE06 ##
+LHFCALC = .T.  
+HFSCREEN = 0.2             # These turn on HSE calculations and match the settings for HSE06
+ALGO = All  
+AEXX = 0.33
+PRECFOCK = Fast               # Any one of these three lines can be used, try them all out if getting errors or no convergence only in HSE
+
+## Parallel ##
+KPAR = 4
+NPAR = 4
+
