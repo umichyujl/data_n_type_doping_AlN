@@ -1,0 +1,69 @@
+##General
+system MgAlN_96atoms
+
+## Output writing ##
+#ISTART = 1
+#ICHARG = 1
+LWAVE = .T.    # Writes WAVECAR, .F. or no line to not write WAVECAR
+LCHARG = .T.   # Writes CHGCAR, .F. or no line to not write CHGCAR
+#LORBIT = 11    # Writes DOSCAR and PROCAR, so DOS data in both total and split by element and orbital character
+#NEDOS = 5000   # This says how many data points for your energy range in your DOS. Default is much smaller and too small.
+#LVTOT = .F.
+
+## electronic settings ##
+ISMEAR = 0     # Gaussian smearing method
+#SIGMA = 0.02   # Amount of smearing, this is very small and my standard
+ENCUT = 500    # Energy cutoff, should be converged, ENMAX in POTCARS gives good estimate to start with
+EDIFF = 1E-5  # Electronic relaxation convergence criterion. 1E-5 is standard, 1E-6 is good, high accuracy for HSE, 1E-8 is a high accuracy you should use if going into GW 
+#NELM = 1     # Max number of electronic steps, default is 60, usually want a higher number to ensure convergence
+#NELMIN = 8     # Min number of electronic steps, want for stability primarily in structure relaxations
+#LASPH = .TRUE.
+ADDGRID = .TRUE.
+#LOPTICS = .TRUE.
+PREC = Accurate  # Defaults to Normal, usually good but use Accurate if going to GW
+#ALGO = Normal    # Electronic optimization algorithm; options for scf and relaxation are Very Fast, Fast, and Normal. speeds match name, Normal is the most stable if getting errors.
+################## Different ALGOs will be used for HSE, GW, BSE, other things.
+NELECT = 290   # 289.0000    total number of electrons
+NUPDOWN = 0
+ISYM    = 0
+NBANDS  = 256
+
+## Ionic / structure settings ##
+#ISIF = 2       # Structure relax command; 3 relaxes ions and cell volume / shape change; 2 is relax ions with force and stress, no unit cell change; other options in manual
+IBRION = -1    # Ionic relaxation algorithm; 2=conjugate gradient method, 1=good for preconverged, -1=for sfc before DOS, band
+NSW = 0      # Maximum number of ionic steps, much higher than default - usually want this way to be sure of convergence 
+#POTIM = 0.05    # This scales the ionic steps to be bigger or smaller, sometimes needs used to help convergence
+EDIFFG = -2E-2 # The the ionic convergence criterion. negative values are a max force on atoms, positive is a max total energy change. -1E-3 is often good, sometimes slow/overkill
+
+## Ionic / structure settings ##
+#LPARD = .T.
+#LSEPB = .F.
+#LSEPK = .F.
+#NBMOD = -3              # energy window relative to E_Fermi
+#EINT  = -1   1     
+
+## HSE06 ##
+LHFCALC = .T. ; HFSCREEN = 0.2             # These turn on HSE calculations and match the settings for HSE06
+#ALGO = D ; TIME = 0.2 ; PRECFOCK = Normal  # HSE uses different ALGOs than normal. Be sure to comment out the ALGO from up above if doing HSE!!
+ALGO = Damped ;  TIME = 0.4 ; PRECFOCK = Fast               # Any one of these three lines can be used, try them all out if getting errors or no convergence only in HSE
+#ALGO = Damped; TIME = 0.4 ; PRECFOCK = Fast;
+AEXX = 0.33
+
+## Parallelization ##
+KPAR = 1        # Kpoint parallelization - optional, make divisible into cores, smallest of number of nodes or kpoints
+NPAR = 64       # Band parallelization - optional, make equal to number of nodes
+LREAL = .F.   # Realspace / reciprocal projection scheme (I think) - use Auto for most systems, use .F. for small (few atoms) - VASP will print warning if needed
+#
+## LD(S)A+U ##
+#LDAU = .TRUE.           # Turns on LDA+U
+#LDAUTYPE = 2            # I forget, but in the manual
+#LDAUL = 2 -1 -1         # says what type (orbital) of correction to apply to each element, using the order of elements in the POSCAR
+#LDAUU = 5.0 0.0 0.0     # Value of U correction
+#LDAUJ = 1.0 0.0 0.0     # actual value of correction used is LDAUU - LDAUJ, so these two lines equal an LDAUU of 4 for the first element's d electrons
+#LDAUPRINT = 1           # This controls how much to print about LDA+U in OUTCAR
+#LASPH = .TRUE.          # I forget, but important I think and was in the manual.
+
+## Wannier Interpolation ##
+#LWANNIER90 = .TRUE.
+
+
